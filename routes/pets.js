@@ -150,17 +150,10 @@ module.exports = (app) => {
           source: token,
         })
         .then((chg) => {
-          // Convert the amount back to dollars for ease in displaying in the template
-          const user = {
-            email: req.body.stripeEmail,
-            amount: chg.amount / 100,
-            petName: pet.name,
-          };
-          // Call our mail handler to manage sending emails
-          mailer.sendMail(user, req, res);
+          res.redirect(`/pets/${req.params.id}`);
         })
         .catch((err) => {
-          console.log('Error: ' + err);
+          console.log('Error:' + err);
         });
     });
   });
