@@ -1,6 +1,6 @@
 if (!process.env.PORT) {
-  require('dotenv').config()
-  process.env.NODE_ENV = "dev"
+  require('dotenv').config();
+  process.env.NODE_ENV = 'dev';
 }
 
 const express = require('express');
@@ -9,11 +9,9 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const methodOverride = require('method-override')
+const methodOverride = require('method-override');
 
 const app = express();
-
-app.locals.PUBLIC_STRIPE_API_KEY = process.env.PUBLIC_STRIPE_API_KEY;
 
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/petes-pets');
@@ -22,8 +20,12 @@ mongoose.connect('mongodb://localhost/petes-pets');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+app.locals.PUBLIC_STRIPE_API_KEY = process.env.PUBLIC_STRIPE_API_KEY;
+
+app.use(express.static(path.join(__dirname, 'public')));
+
 // override with POST having ?_method=DELETE or ?_method=PUT
-app.use(methodOverride('_method'))
+app.use(methodOverride('_method'));
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
